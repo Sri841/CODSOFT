@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India's Favourite Foods by State</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FDF6EC;
+    --cream-dark: #F5EAD8;
+    --orange: #E07B39;
+    --orange-light: #F5A55A;
+    --orange-pale: #FDE8D3;
+    --green: #5C7A4E;
+    --green-light: #7A9E6B;
+    --green-pale: #E8F0E4;
+    --brown: #6B3F1E;
+    --brown-light: #A0612E;
+    --gold: #C9882A;
+    --text-dark: #2C1A0E;
+    --text-mid: #5A3E28;
+    --text-light: #8B6A50;
+    --card-shadow: 0 8px 32px rgba(110,63,30,0.12);
+    --card-shadow-hover: 0 20px 48px rgba(110,63,30,0.22);
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(253,246,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(224,123,57,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 900;
+    color: var(--brown);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-mid);
+    font-size: 0.9rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--orange); }
+  .nav-cta {
+    background: var(--orange); color: #fff;
+    padding: 10px 24px; border-radius: 50px;
+    text-decoration: none; font-weight: 600; font-size: 0.9rem;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--brown); transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 60%, #EAD9C0 100%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; bottom: 0; right: 0;
+    width: 60%; height: 70%;
+    background: radial-gradient(ellipse at 80% 80%, rgba(224,123,57,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-deco {
+    position: absolute; top: 120px; left: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(92,122,78,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { flex: 1; max-width: 560px; position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-block;
+    background: var(--orange-pale); color: var(--orange);
+    padding: 6px 18px; border-radius: 50px;
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--brown);
+    margin-bottom: 20px;
+  }
+  .hero h1 em { color: var(--orange); font-style: italic; }
+  .hero p {
+    font-size: 1.05rem; line-height: 1.7;
+    color: var(--text-mid); margin-bottom: 36px; max-width: 440px;
+  }
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--orange); color: #fff;
+    padding: 14px 36px; border-radius: 50px;
+    font-weight: 700; font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 0 6px 24px rgba(224,123,57,0.35);
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--brown); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(107,63,30,0.35); }
+  .btn-secondary {
+    color: var(--brown); font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; display: flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary svg { transition: transform 0.2s; }
+  .btn-secondary:hover svg { transform: translateX(4px); }
+
+  .hero-visual {
+    flex: 1; display: flex; justify-content: center; align-items: center;
+    position: relative; z-index: 2;
+  }
+  .hero-circle {
+    width: clamp(300px, 40vw, 500px);
+    height: clamp(300px, 40vw, 500px);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 8px solid rgba(224,123,57,0.2);
+    box-shadow: 0 24px 80px rgba(110,63,30,0.25);
+    position: relative;
+  }
+  .hero-circle img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-circle-ring {
+    position: absolute; inset: -20px;
+    border-radius: 50%;
+    border: 2px dashed rgba(224,123,57,0.3);
+    animation: spin 30s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px; flex-wrap: wrap;
+  }
+  .stat { text-align: left; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; color: var(--orange);
+  }
+  .stat-label { font-size: 0.82rem; color: var(--text-light); font-weight: 500; }
+
+  /* decorative wave */
+  .wave-divider {
+    width: 100%; overflow: hidden; line-height: 0; margin-top: -2px;
+  }
+  .wave-divider svg { display: block; width: 100%; }
+
+  /* ─── SECTION COMMON ─── */
+  .section-header { text-align: center; margin-bottom: 56px; }
+  .section-tag {
+    display: inline-block;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem; color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 900; color: var(--brown);
+    margin-bottom: 12px;
+  }
+  .section-desc {
+    font-size: 1rem; color: var(--text-light);
+    max-width: 560px; margin: 0 auto; line-height: 1.7;
+  }
+
+  /* ─── STATE NAV ─── */
+  .state-nav-section {
+    padding: 60px 48px 40px;
+    background: var(--cream-dark);
+  }
+  .state-pills {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  }
+  .state-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 22px; border-radius: 50px;
+    background: #fff; border: 2px solid transparent;
+    font-weight: 600; font-size: 0.9rem;
+    color: var(--text-mid); cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 3px 12px rgba(110,63,30,0.08);
+    transition: all 0.2s;
+  }
+  .state-pill:hover {
+    border-color: var(--orange); color: var(--orange);
+    transform: translateY(-2px); box-shadow: 0 6px 20px rgba(224,123,57,0.2);
+  }
+  .state-pill .emoji { font-size: 1.1rem; }
+
+  /* ─── STATE SECTION ─── */
+  .state-section {
+    padding: 80px 48px;
+    position: relative;
+  }
+  .state-section:nth-child(even) { background: var(--cream-dark); }
+  .state-section:nth-child(odd) { background: var(--cream); }
+
+  .state-header {
+    display: flex; align-items: flex-start; gap: 24px;
+    margin-bottom: 48px; flex-wrap: wrap;
+  }
+  .state-badge {
+    width: 72px; height: 72px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem; flex-shrink: 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  .state-info { flex: 1; }
+  .state-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 900; color: var(--brown);
+    line-height: 1.1; margin-bottom: 6px;
+  }
+  .state-desc {
+    font-size: 0.95rem; color: var(--text-light); max-width: 600px; line-height: 1.6;
+  }
+  .state-count {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem; color: var(--orange-light); margin-top: 4px;
+  }
+
+  /* ─── FOOD GRID ─── */
+  .food-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  /* ─── FOOD CARD ─── */
+  .food-card {
+    background: #fff; border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+  .food-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-hover);
+  }
+  .card-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 3;
+    padding: 4px 12px; border-radius: 50px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .card-rank {
+    position: absolute; top: 14px; right: 14px; z-index: 3;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900; font-size: 0.85rem; color: var(--brown);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .card-img {
+    width: 100%; height: 200px; object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, var(--cream-dark), var(--orange-pale));
+    position: relative;
+  }
+  .card-img-placeholder {
+    width: 100%; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+  }
+  .card-body { padding: 20px; }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--brown); margin-bottom: 8px;
+  }
+  .card-desc {
+    font-size: 0.87rem; color: var(--text-light);
+    line-height: 1.6; margin-bottom: 14px;
+  }
+  .card-recipe {
+    background: var(--green-pale);
+    border-left: 3px solid var(--green-light);
+    padding: 10px 14px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.8rem; color: var(--green);
+    line-height: 1.5;
+  }
+  .card-recipe strong { display: block; margin-bottom: 3px; color: var(--green); }
+
+  /* ─── FEATURED STRIP ─── */
+  .featured-strip {
+    padding: 60px 48px;
+    background: linear-gradient(135deg, var(--brown) 0%, var(--brown-light) 100%);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .featured-strip::before {
+    content: '🍛'; font-size: 200px; opacity: 0.05;
+    position: absolute; right: -40px; bottom: -40px; line-height: 1;
+  }
+  .featured-strip h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: #fff; margin-bottom: 12px;
+  }
+  .featured-strip p { color: rgba(255,255,255,0.75); max-width: 500px; margin: 0 auto 28px; line-height: 1.7; }
+  .btn-white {
+    background: #fff; color: var(--brown);
+    padding: 13px 36px; border-radius: 50px;
+    font-weight: 700; font-size: 1rem;
+    text-decoration: none; display: inline-block;
+    transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--text-dark);
+    color: rgba(255,255,255,0.8);
+    padding: 56px 48px 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px; margin-bottom: 48px;
+  }
+  .footer-brand .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900;
+    color: #fff; margin-bottom: 12px;
+  }
+  .footer-brand .brand-name span { color: var(--orange); }
+  .footer-brand p { font-size: 0.88rem; line-height: 1.7; color: rgba(255,255,255,0.6); margin-bottom: 20px; }
+  .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--orange); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: gap;
+    gap: 16px;
+  }
+  .footer-bottom p { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+  .footer-heart { color: #E74C3C; }
+
+  /* state color themes */
+  .punjab .state-badge { background: linear-gradient(135deg, #FF9A3C, #FF6B35); }
+  .punjab .card-badge { background: rgba(255,107,53,0.15); color: #FF6B35; }
+  .punjab .state-name { color: #C4501A; }
+
+  .westbengal .state-badge { background: linear-gradient(135deg, #5B8DB8, #3A6B9B); }
+  .westbengal .card-badge { background: rgba(58,107,155,0.15); color: #3A6B9B; }
+  .westbengal .state-name { color: #2A5280; }
+
+  .tamilnadu .state-badge { background: linear-gradient(135deg, #4CAF50, #2E7D32); }
+  .tamilnadu .card-badge { background: rgba(46,125,50,0.15); color: #2E7D32; }
+  .tamilnadu .state-name { color: #1B5E20; }
+
+  .hyderabad .state-badge { background: linear-gradient(135deg, #9C27B0, #6A1B9A); }
+  .hyderabad .card-badge { background: rgba(106,27,154,0.15); color: #6A1B9A; }
+  .hyderabad .state-name { color: #4A148C; }
+
+  .gujarat .state-badge { background: linear-gradient(135deg, #FFC107, #F57F17); }
+  .gujarat .card-badge { background: rgba(245,127,23,0.15); color: #F57F17; }
+  .gujarat .state-name { color: #BF6000; }
+
+  .rajasthan .state-badge { background: linear-gradient(135deg, #F44336, #B71C1C); }
+  .rajasthan .card-badge { background: rgba(183,28,28,0.15); color: #B71C1C; }
+  .rajasthan .state-name { color: #7F0000; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .hero { flex-direction: column; padding: 100px 24px 60px; text-align: center; }
+    .hero-content { max-width: 100%; }
+    .hero p { margin: 0 auto 32px; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero-visual { margin-top: 40px; }
+    .hero-circle { width: 280px; height: 280px; }
+    .state-nav-section, .state-section, .featured-strip { padding: 48px 24px; }
+    .food-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 560px) {
+    .food-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .state-header { flex-direction: column; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * { animation: fadeUp 0.7s ease both; }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.2s; }
+  .hero p { animation-delay: 0.3s; }
+  .hero-actions { animation-delay: 0.4s; }
+  .hero-stats { animation-delay: 0.5s; }
+  .hero-visual { animation: fadeUp 0.9s 0.3s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🍱 <span>Bharat</span>Bhojan</div>
+  <ul class="nav-links">
+    <li><a href="#punjab">Punjab</a></li>
+    <li><a href="#westbengal">West Bengal</a></li>
+    <li><a href="#tamilnadu">Tamil Nadu</a></li>
+    <li><a href="#hyderabad">Hyderabad</a></li>
+    <li><a href="#gujarat">Gujarat</a></li>
+    <li><a href="#rajasthan">Rajasthan</a></li>
+  </ul>
+  <a href="#explore" class="nav-cta">Explore Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="explore">
+  <div class="hero-deco"></div>
+  <div class="hero-content">
+    <span class="hero-tag">🇮🇳 28 States · Infinite Flavours</span>
+    <h1>Explore India's <em>Favourite</em> Foods</h1>
+    <p>From the butter-soaked kitchens of Punjab to the mustard-scented shores of Bengal — a curated journey through India's most beloved regional dishes, state by state.</p>
+    <div class="hero-actions">
+      <a href="#punjab" class="btn-primary">Explore Now 🍽️</a>
+      <a href="#state-nav" class="btn-secondary">
+        Browse States
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">States Featured</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">Iconic Dishes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1000+</div>
+        <div class="stat-label">Years of Tradition</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-circle">
+    <div class="hero-circle-ring"></div>
+    <img src="https://static.toiimg.com/thumb/72023714.jpg?photoid=72023714&imgsize=2042813&width=600&height=335&resizemode=75" alt="Indian Food" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+  </div>
+  </div>
+</section>
+
+<!-- STATE NAV PILLS -->
+<section class="state-nav-section" id="state-nav">
+  <div class="section-header">
+    <div class="section-tag">✦ Navigate by State</div>
+    <h2 class="section-title">Choose Your Culinary Destination</h2>
+    <p class="section-desc">Click any state below to jump straight to its signature dishes and flavour stories.</p>
+  </div>
+  <div class="state-pills">
+    <a href="#punjab" class="state-pill"><span class="emoji">🟠</span> Punjab</a>
+    <a href="#westbengal" class="state-pill"><span class="emoji">🔵</span> West Bengal</a>
+    <a href="#tamilnadu" class="state-pill"><span class="emoji">🟢</span> Tamil Nadu</a>
+    <a href="#hyderabad" class="state-pill"><span class="emoji">🟣</span> Hyderabad</a>
+    <a href="#gujarat" class="state-pill"><span class="emoji">🟡</span> Gujarat</a>
+    <a href="#rajasthan" class="state-pill"><span class="emoji">🔴</span> Rajasthan</a>
+  </div>
+</section>
+
+<!-- ══════════ PUNJAB ══════════ -->
+<section class="state-section punjab" id="punjab">
+  <div class="state-header">
+    <div class="state-badge">🌾</div>
+    <div class="state-info">
+      <div class="state-count">✦ 5 Iconic Dishes</div>
+      <h2 class="state-name">Punjab</h2>
+      <p class="state-desc">The land of five rivers and unmatched hospitality. Punjabi food is bold, rich, and unapologetically generous — a cuisine where butter isn't a condiment, it's a philosophy.</p>
+    </div>
+  </div>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <span class="card-badge">🏆 Iconic</span>
+      <span class="card-rank">#1</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Butter_Chicken_%26_Butter_Naan_-_Home_-_Chandigarh_-_India_-_0006.jpg" alt="Butter Chicken" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Butter Chicken</h3>
+        <p class="card-desc">Tender tandoor-kissed chicken dunked in a velvety tomato-butter-cream gravy. Born in Delhi, claimed by every Punjabi household — and the world's most ordered Indian dish.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Marinate chicken in yoghurt & spices, grill in tandoor, then simmer in rich tomato-butter-cream sauce with fenugreek (kasuri methi) for the signature smoky-sweet flavour.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🌿 Seasonal</span>
+      <span class="card-rank">#2</span>
+      <img src="https://shwetainthekitchen.com/wp-content/uploads/2021/01/Sarson-ka-Saag.jpg" alt="Sarson da Saag" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Sarson da Saag</h3>
+        <p class="card-desc">A winter-harvest delicacy of slow-cooked mustard greens, spinach, and bathua, finished with a generous dollop of desi ghee and ginger. Winter evenings made edible.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Boil mustard greens with spinach, blend partially, sauté with onion, garlic, ginger. Finish with white butter. Best served with Makki di Roti.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🌽 Staple</span>
+      <span class="card-rank">#3</span>
+      <img src="https://static.toiimg.com/thumb/56097918.cms?imgsize=421800&width=509&height=340" alt="Makki di Roti" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Makki di Roti</h3>
+        <p class="card-desc">Thick, unleavened corn-flour flatbread cooked on a tawa till golden. The essential companion to Sarson da Saag — rustic, wholesome, and deeply satisfying.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Knead yellow maize flour with warm water into a soft dough. Pat by hand onto hot tawa, cook on both sides till golden spots appear. Serve hot with white butter.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🥘 Street Legend</span>
+      <span class="card-rank">#4</span>
+      <img src="https://i0.wp.com/kalimirchbysmita.com/wp-content/uploads/2019/10/Chole-Bhature-01.jpg?w=1024&ssl=1" alt="Chole Bhature" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Chole Bhature</h3>
+        <p class="card-desc">Spiced chickpea curry so bold it'll wake you up, paired with a cloud-light deep-fried bhatura. Punjab's definitive breakfast — eaten morning till midnight.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Cook soaked chickpeas with tea bags (for colour), sauté with whole spices & tomatoes. Make bhatura dough with maida, yoghurt, baking soda; deep-fry till puffed golden.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🥛 Drink</span>
+      <span class="card-rank">#5</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Salt_lassi.jpg" alt="Lassi" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Lassi</h3>
+        <p class="card-desc">Cool, creamy, churned yoghurt drink served sweet with rose water and cream, or salted with cumin. The Punjabi answer to every question — especially summer.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Whip full-fat yoghurt in a blender with cold water, sugar (or salt), and cardamom. Top with a thick layer of malai (clotted cream) and a pinch of saffron.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ WEST BENGAL ══════════ -->
+<section class="state-section westbengal" id="westbengal">
+  <div class="state-header">
+    <div class="state-badge">🐟</div>
+    <div class="state-info">
+      <div class="state-count">✦ 5 Iconic Dishes</div>
+      <h2 class="state-name">West Bengal</h2>
+      <p class="state-desc">Where rivers meet artistry — Bengali cuisine balances the pungency of mustard oil, the sweetness of hilsa, and the joy of mishti doi with extraordinary refinement.</p>
+    </div>
+  </div>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <span class="card-badge">🐟 Beloved</span>
+      <span class="card-rank">#1</span>
+      <img src="https://pikturenama.com/wp-content/uploads/2025/05/Macher-Jhol-Bhat-3.jpg" alt="Macher Jhol" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Macher Jhol</h3>
+        <p class="card-desc">A light, golden fish curry with potatoes, turmeric, and cumin — cooked in mustard oil. Not spicy but deeply flavoured, the heartbeat of a Bengali household.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Fry marinated fish in mustard oil. Sauté potatoes with panch phoron, turmeric, green chillies. Add water, simmer with fish till gravy is thin and fragrant.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🥩 Slow Cooked</span>
+      <span class="card-rank">#2</span>
+      <img src="https://pikturenama.com/wp-content/uploads/2016/02/Kosha_Mangsho-9-logo.jpg" alt="Kosha Mangsho" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Kosha Mangsho</h3>
+        <p class="card-desc">Dark, slow-braised mutton curry with caramelised onions and deep whole spices. The Sunday ritual of every Bengali home — worth every hour of patient cooking.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Marinate mutton in yoghurt, spices, raw papaya. Slow-cook with caramelised onion paste on low flame till oil separates. Serve with luchi or rice.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">👑 Signature</span>
+      <span class="card-rank">#3</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/ঐতিহ্যবাহী_সর্ষে_ইলিশ.jpg" alt="Shorshe Ilish" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Shorshe Ilish</h3>
+        <p class="card-desc">Hilsa fish — the queen of Bengali rivers — steamed or fried in a potent mustard-green chilli paste. A taste so singular it's nearly sacred to Bengalis.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Grind mustard seeds with green chillies and salt into a paste. Coat hilsa pieces, add mustard oil and turmeric. Steam or bake in a banana-leaf parcel for 15 min.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🌯 Street Food</span>
+      <span class="card-rank">#4</span>
+      <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2023/11/16/DV3809-kati-roll-saffron-street-calgary-alberta_s4x3.jpg.rend.hgtvcom.826.620.suffix/1700150779023.webp" alt="Kathi Roll" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Kathi Roll</h3>
+        <p class="card-desc">Flaky egg-coated paratha wrapped around spiced chicken or mutton, raw onion, green chutney, and lime. Born on Kolkata's Park Street, now conquered every city.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Dip paratha in beaten egg, fry till crisp. Fill with grilled chicken tikka, sliced onion, green chutney, and a squeeze of lime. Roll tight and serve in paper.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🍮 Dessert</span>
+      <span class="card-rank">#5</span>
+     <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Mishti_Doi.jpg" alt="Mishti Doi" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Mishti Doi</h3>
+        <p class="card-desc">Sweet, fermented yoghurt set in clay pots overnight — caramel-hued, silky, and gentle on the palate. The quiet, perfect ending to every Bengali meal.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Reduce full-fat milk with caramelised sugar till slightly thick. Cool to lukewarm, mix in yoghurt culture, pour into earthen pots. Set overnight in a warm place.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ TAMIL NADU ══════════ -->
+<section class="state-section tamilnadu" id="tamilnadu">
+  <div class="state-header">
+    <div class="state-badge">🌿</div>
+    <div class="state-info">
+      <div class="state-count">✦ 5 Iconic Dishes</div>
+      <h2 class="state-name">Tamil Nadu</h2>
+      <p class="state-desc">A cuisine rooted in ancient Sangam traditions — where rice, lentils, and tamarind form an eternal trinity, and every meal on a banana leaf is a meditation.</p>
+    </div>
+  </div>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <span class="card-badge">⭐ World Famous</span>
+      <span class="card-rank">#1</span>
+     <img src="https://www.cookwithmanali.com/wp-content/uploads/2020/05/Masala-Dosa-1014x1536.jpg" alt="Dosa" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Dosa</h3>
+        <p class="card-desc">Crisp, lace-thin crepe of fermented rice-lentil batter, served with coconut chutney and sambar. Masala dosa variant stuffed with spiced potato mash is a global icon.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Soak & grind rice and urad dal separately, combine, ferment 8–12 hours. Pour thin circles on hot tawa, drizzle oil, cook till crisp and golden. Serve with chutneys.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🌅 Breakfast</span>
+      <span class="card-rank">#2</span>
+      <img src="https://c.ndtvimg.com/2019-03/g49icpdk_world-idli-day-idli-generic_625x300_29_March_19.jpg" alt="Idli" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Idli</h3>
+        <p class="card-desc">Soft, pillowy steam-cooked rice cakes — featherlight, gut-friendly, and deeply satisfying. Tamil Nadu's gift to the world's breakfast tables. Dunk in sambar; bliss.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Ferment rice and urad dal batter overnight. Pour into greased idli moulds, steam for 10–12 minutes. Serve hot with coconut chutney and tomato-based sambar.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🥘 Staple</span>
+      <span class="card-rank">#3</span>
+      <img src="https://www.whiskaffair.com/wp-content/uploads/2020/10/Sambar-2-1.jpg" alt="Sambar" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Sambar</h3>
+        <p class="card-desc">Tangy tamarind and toor dal stew loaded with drumstick, tomatoes, and pearl onions — spiced with sambar powder. The glue that holds South Indian cuisine together.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Cook toor dal, add tamarind extract, vegetables, and sambar masala. Finish with a mustard-curry leaf-red chilli tempering in sesame oil. Simmer 5 min. Done.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🌾 Harvest</span>
+      <span class="card-rank">#4</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Sweetpongal.jpg" alt="Pongal" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Pongal</h3>
+        <p class="card-desc">Harvest-festival rice-and-lentil porridge tempered with black pepper, cashews, and ghee — ven pongal (savoury) for mornings, sweet sakkarai pongal for celebrations.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Pressure-cook rice with moong dal till mushy. Temper ghee with mustard, cumin, black pepper, curry leaves, cashews. Mix in, add salt. Serve hot with chutney.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🌶️ Fiery</span>
+      <span class="card-rank">#5</span>
+      <img src="https://www.whiskaffair.com/wp-content/uploads/2020/09/Chicken-Chettinad-Curry-2-1.jpg" alt="Chettinad Chicken" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Chettinad Chicken</h3>
+        <p class="card-desc">The jewel of Chettinad cuisine — chicken cooked in an explosive spice paste of kalpasi, marathi mokku, and stone-flower. Complex, aromatic, and thrillingly bold.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Grind fresh Chettinad spice masala with coconut. Sauté with onions, tomatoes, and chicken. Cook covered on slow flame till oil separates and meat is tender.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ HYDERABAD ══════════ -->
+<section class="state-section hyderabad" id="hyderabad">
+  <div class="state-header">
+    <div class="state-badge">👑</div>
+    <div class="state-info">
+      <div class="state-count">✦ 5 Iconic Dishes</div>
+      <h2 class="state-name">Hyderabad · Telangana</h2>
+      <p class="state-desc">A city where Mughal opulence meets Deccan earthy-ness. Hyderabadi food is an event, not just a meal — layered, perfumed, and royally proportioned.</p>
+    </div>
+  </div>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <span class="card-badge">👑 Royal</span>
+      <span class="card-rank">#1</span>
+      <img src="https://www.licious.in/blog/wp-content/uploads/2022/06/chicken-hyderabadi-biryani-01.jpg" alt="Hyderabadi Biryani" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Hyderabadi Biryani</h3>
+        <p class="card-desc">Slow-cooked dum biryani with fragrant basmati, caramelised onions, saffron, and marinated meat sealed inside a pot — the Nizams' greatest gift to humanity.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Layer half-cooked rice over marinated meat in a pot. Seal with dough, cook on dum (steam) for 45 min. Open at the table for maximum drama and aroma.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🥘 Slow Cooked</span>
+      <span class="card-rank">#2</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Hyderabadi_Mutton_Haleem.jpg" alt="Haleem" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Haleem</h3>
+        <p class="card-desc">A thick, porridge-like stew of wheat, barley, and slow-cooked mutton — stirred for hours until silky. A Ramzan staple now eaten year-round with lime and crispy onions.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Soak broken wheat overnight. Cook mutton till falling-apart, combine with wheat, spice, and stock. Stir continuously 2–3 hours till paste-like. Garnish liberally.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🔥 Grilled</span>
+      <span class="card-rank">#3</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Sate-2.JPG" alt="Kebabs" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Kebabs</h3>
+        <p class="card-desc">Seekh kebabs, shami kebabs, and pathar ka gosht — smoked over charcoal to juicy perfection. Hyderabad's streets smell of these from dusk to midnight.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Mince mutton with spices, onion, and green chillies. Shape onto skewers (seekh) or patties (shami). Grill on charcoal or tawa till caramelised. Serve with mint chutney.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🍮 Dessert</span>
+      <span class="card-rank">#4</span>
+      <img src="https://www.whiskaffair.com/wp-content/uploads/2018/08/Double-ka-Meetha-2-1.jpg" alt="Double Ka Meetha" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Double Ka Meetha</h3>
+        <p class="card-desc">Fried bread (double roti) soaked in rich reduced milk and sugar, garnished with saffron, cardamom, and dry fruits. Hyderabad's answer to bread pudding — infinitely better.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Deep-fry bread slices till golden. Soak in warm sugar syrup, then layer with thickened rabdi milk. Garnish with pistachios, saffron, and rose water. Serve warm.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🌶️ Fiery</span>
+      <span class="card-rank">#5</span>
+      <img src="https://rakskitchen.net/wp-content/uploads/2025/07/mirchi-ka-salan.jpg" alt="Mirchi Ka Salan" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Mirchi Ka Salan</h3>
+        <p class="card-desc">Big green chillies in a nutty, tangy gravy of peanuts, sesame, and tamarind — the traditional accompaniment to Hyderabadi biryani. Spicy, creamy, and addictive.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Fry whole green chillies. Blend peanuts, sesame, coconut, and dry-roasted spices. Sauté masala, add tamarind water and chillies. Simmer till thick and glossy.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ GUJARAT ══════════ -->
+<section class="state-section gujarat" id="gujarat">
+  <div class="state-header">
+    <div class="state-badge">🌻</div>
+    <div class="state-info">
+      <div class="state-count">✦ 5 Iconic Dishes</div>
+      <h2 class="state-name">Gujarat</h2>
+      <p class="state-desc">Predominantly vegetarian yet endlessly inventive — Gujarati cuisine balances sweet, sour, and spicy in every bite, proving that vegetables need no apology.</p>
+    </div>
+  </div>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <span class="card-badge">⭐ Staple</span>
+      <span class="card-rank">#1</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Dhokla_on_Gujrart.jpg" alt="Dhokla" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Dhokla</h3>
+        <p class="card-desc">Soft, spongy steamed cakes of fermented chickpea flour — tangy, subtly sweet, and light enough to eat endlessly. A snack that doubles as a meal of conscience.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Ferment besan (gram flour) batter with curd, add Eno, steam 15 min. Temper with mustard seeds, green chillies, and curry leaves. Drizzle lemon juice and garnish.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🌿 Everyday</span>
+      <span class="card-rank">#2</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/74/Thepla_main.jpg" alt="Thepla" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Thepla</h3>
+        <p class="card-desc">Spiced flatbread of whole wheat and fenugreek leaves — soft yet sturdy, made for travel. The Gujarati traveller's best companion on every train journey ever taken.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Knead whole wheat flour with fresh methi, besan, yoghurt, turmeric, and chilli powder. Roll thin, cook on tawa with oil till brown spots appear. Store up to 3 days.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🎨 Artisanal</span>
+      <span class="card-rank">#3</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Khandvi_%2810497367994%29.jpg" alt="Khandvi" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Khandvi</h3>
+        <p class="card-desc">Delicate rolls of cooked chickpea-yoghurt batter spread paper-thin and rolled. One of the most technically demanding snacks in all Indian cooking — and worth every effort.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Cook besan-curd-water mixture while stirring till thick. Spread thin on a greased surface. Cool, roll into spirals. Temper with mustard, sesame, and green chilli.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">❄️ Winter Special</span>
+      <span class="card-rank">#4</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Undhiyu.jpg" alt="Undhiyu" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Undhiyu</h3>
+        <p class="card-desc">A glorious winter casserole of seasonal vegetables, raw banana, purple yam, and muthia — traditionally slow-cooked underground upside-down in a clay pot.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Layer mixed winter vegetables with methi muthia, and a masala of coconut, coriander, and sesame. Cook slow in a sealed vessel or pressure cooker till tender and melded.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🥨 Crunchy</span>
+      <span class="card-rank">#5</span>
+      <img src="https://images.news18.com/ibnkhabar/uploads/2023/06/fafda.jpg?impolicy=website&width=640&height=480" alt="Fafda" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Fafda</h3>
+        <p class="card-desc">Crispy, coiled gram-flour strips fried to a snappy golden — the quintessential Gujarati Sunday breakfast with papaya chutney and jalebi. Crunch therapy.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Knead besan with ajwain, turmeric, and oil into a stiff dough. Roll or extrude into strips, deep-fry in medium oil till golden and crisp. Serve with raw papaya chutney.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ RAJASTHAN ══════════ -->
+<section class="state-section rajasthan" id="rajasthan">
+  <div class="state-header">
+    <div class="state-badge">🏜️</div>
+    <div class="state-info">
+      <div class="state-count">✦ 5 Iconic Dishes</div>
+      <h2 class="state-name">Rajasthan</h2>
+      <p class="state-desc">Born of desert survival and royal excess — Rajasthani food is bold, preserved, and spectacularly spiced. A cuisine where scarcity became artistry.</p>
+    </div>
+  </div>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <span class="card-badge">🏆 Legend</span>
+      <span class="card-rank">#1</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/DalBati.jpg" alt="Dal Baati" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Dal Baati Churma</h3>
+        <p class="card-desc">The royal triad — hard wheat baati baked over cow-dung cakes, dunked in five-lentil dal, with sweet crumbled churma. A meal so complete it's practically a festival.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Knead wheat-ghee dough, shape into balls, bake in oven or over fire. Cook panchmel dal with Rajasthani spices. Break baati, drown in dal and ghee. Serve churma aside.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🌿 Vegetarian</span>
+      <span class="card-rank">#2</span>
+      <img src="https://carveyourcraving.com/wp-content/uploads/2021/09/gatte-ki-sabji.jpg" alt="Dal Baati" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Gatte ki Sabzi</h3>
+        <p class="card-desc">Gram flour dumplings in a tangy, fiery yoghurt-based gravy with whole spices. Rajasthan's ingenious solution to the desert's lack of fresh vegetables — addictively good.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Boil spiced besan-dough cylinders, slice into pieces. Fry briefly. Simmer in a temperedcurd gravy. Cook till gravy thickens and gatte absorb the flavour. Serve with baati.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🏜️ Desert Gem</span>
+      <span class="card-rank">#3</span>
+      <img src="https://www.whiskaffair.com/wp-content/uploads/2020/09/Ker-Sangri-2-1.jpg" alt="Ker Sangri" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Ker Sangri</h3>
+        <p class="card-desc">Dried desert berries (ker) and dried sangri beans cooked in mustard oil with whole spices and dry red chillies. The ultimate desert pantry dish — earthy and uncompromising.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Soak ker and sangri overnight. Drain, fry in mustard oil with whole spices and dried chillies. Add salt and amchur. Cook dry. Stores for days — a true desert staple.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🔥 Bold</span>
+      <span class="card-rank">#4</span>
+      <img src="https://www.whiskaffair.com/wp-content/uploads/2021/04/Laal-Maas-2-1.jpg" alt="Laal Maas" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Laal Maas</h3>
+        <p class="card-desc">Fiery, blood-red mutton curry made with Mathania chillies and game-hunting traditions. The fearless fire of Rajasthan in a bowl — not for the faint-hearted.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Marinate mutton in red Mathania chilli paste. Sauté with ghee, whole spices, and onions. Add yoghurt, cook on slow flame 90 min till oil rises and mutton is fall-apart tender.
+        </div>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <span class="card-badge">🍮 Festive</span>
+      <span class="card-rank">#5</span>
+      <img src="https://www.cookwithmanali.com/ghevar-how-to-make-ghevar/ghevar-indian-sweet/" alt="Ghewar" class="card-img">
+      <div class="card-body">
+        <h3 class="card-name">Ghewar</h3>
+        <p class="card-desc">A disc-shaped honeycomb sweet of maida batter fried in ghee and drenched in sugar syrup — topped with rabdi and saffron. The star of Teej and Raksha Bandhan.</p>
+        <div class="card-recipe">
+          <strong>🍳 How to Make</strong>
+          Drizzle thin maida batter into a mould of hot ghee, building a latticed disc layer by layer. Soak in hot sugar syrup. Top with thickened rabdi, pistachios, and silver varq.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="featured-strip">
+  <h2>Taste Every Corner of India 🗺️</h2>
+  <p>From saffron valleys to coconut coastlines — India's culinary map is the world's greatest adventure. Start your flavour journey today.</p>
+  <a href="#explore" class="btn-white">Back to the Top ↑</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand footer-col">
+      <div class="brand-name">🍱 <span>Bharat</span>Bhojan</div>
+      <p>A love letter to the kitchens, grandmothers, street carts, and royal courts that shaped India's extraordinary food culture — one state at a time.</p>
+    </div>
+    <div class="footer-col">
+      <h4>States</h4>
+      <ul>
+        <li><a href="#punjab">Punjab</a></li>
+        <li><a href="#westbengal">West Bengal</a></li>
+        <li><a href="#tamilnadu">Tamil Nadu</a></li>
+        <li><a href="#hyderabad">Hyderabad</a></li>
+        <li><a href="#gujarat">Gujarat</a></li>
+        <li><a href="#rajasthan">Rajasthan</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#">Street Foods</a></li>
+        <li><a href="#">Desserts of India</a></li>
+        <li><a href="#">Festival Foods</a></li>
+        <li><a href="#">Vegetarian India</a></li>
+        <li><a href="#">Regional Spices</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:hello@bharatbhojan.in">hello@bharatbhojan.in</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Submit a Recipe</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Made with <span class="footer-heart">❤️</span> in India — celebrating every kitchen, every spice, every story.</p>
+    <p>© 2026 BharatBhojan · All Dishes Reserved 🍽️</p>
+  </div>
+</footer>
+
+</body>
+</html>
